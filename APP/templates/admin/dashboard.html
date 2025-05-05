@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dark Web Threat Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+
+<!-- Overlay -->
+<div id="overlay"></div>
+
+<!-- Sidebar -->
+<nav class="sidebar" id="sidebar">
+  <h2>Dashboard Menu</h2>
+  <button onclick="location.href='/admin/dashboard'">Dashboard</button>
+  <button onclick="logout()">Logout</button>
+  <button onclick="downloadCSV()">Download CSV</button>
+</nav>
+
+<!-- Toggle Button -->
+<button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+
+<!-- Main Content -->
+<main class="main-content" id="mainContent">
+  <header>
+    <h1>Threat Intelligence Overview</h1>
+  </header>
+
+  <section class="cards">
+    <div class="card">
+      <h3>Total Threats</h3>
+      <p id="total-threats">{{ total_threats }}</p>
+    </div>
+    <div class="card">
+      <h3>Recent Scans</h3>
+      <p id="recent-scans">{{ recent_scans | length }}</p>
+    </div>
+    <div class="card">
+      <h3>Last Updated</h3>
+      <p id="last-updated">{{ last_updated.strftime('%Y-%m-%d %H:%M:%S') if last_updated else '-' }}</p>
+    </div>
+  </section>
+
+  <form id="scanForm">
+    <input type="text" id="scanInput" placeholder="Enter dark web URL to scan..." required>
+    <button type="submit">Scan Now</button>
+  </form>
+
+  <input type="text" id="searchInput" placeholder="Search threats...">
+
+  <!-- Loading Spinner -->
+  <div id="loadingSpinner" style="display: none;">Scanning...</div>
+
+  <section class="cards" id="cardsContainer"></section>
+</main>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>
+
+
